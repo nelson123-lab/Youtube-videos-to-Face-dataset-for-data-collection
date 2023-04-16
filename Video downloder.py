@@ -1,0 +1,130 @@
+
+import os
+import math
+import datetime
+import cv2
+from mtcnn.mtcnn import MTCNN
+# from pytube import YouTube
+# from __future__ import unicode_literals
+import youtube_dl
+
+
+link = open('C:/Users/NELSON JOSEPH/Downloads/data/links_file.txt','r') #The text file where the links to be pasted.
+# download_path = "C:/Users/NELSON JOSEPH/Downloads/data/Downloaded_videos"
+path = 'C:/Users/NELSON JOSEPH/Downloads/data'
+os.chdir(path)
+New_folder = "Downloaded_videos"
+os.makedirs(New_folder)
+for i in link.readlines():
+    # ydl_opts = {'outtmpl': os.path.join(download_path, '%(title)s-%(id)s.%(ext)s'),}
+    ydl_opts = {}
+    os.chdir(path + "/Downloaded_videos")
+    try:
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([i])
+    except:
+        print("Some errror")
+    """ pytube library not working after new youtube policy """
+    # yt = YouTube(str(i)) 
+    # try:
+    #     yt.streams.filter(progressive = True, 
+    #     file_extension = "mp4").first().download(output_path = "C:/Users/NELSON JOSEPH/Downloads/data/Downloaded_videos")# Folder where the downloads are present.
+    #     print(str(i)+"Completed")
+    # except:
+    #     print("Some Error!")
+print('Task Completed!')
+
+"""  To Convert Videos to frames  """
+
+class FrameExtractor():
+    '''
+    Class used for extracting frames from a video file.
+    '''
+    def __init__(self, video_path):
+        self.video_path = video_path
+        self.vid_cap = cv2.VideoCapture(video_path)
+        self.n_frames = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        self.fps = int(self.vid_cap.get(cv2.CAP_PROP_FPS))
+        
+    def get_video_duration(self):
+        duration = self.n_frames/self.fps
+        print(f'Duration: {datetime.timedelta(seconds=duration)}')
+        
+    def get_n_images(self, every_x_frame):
+        n_images = math.floor(self.n_frames / every_x_frame) + 1
+        print(f'Extracting every {every_x_frame} (nd/rd/th) frame would result in {n_images} images.')
+        
+    def extract_frames(self, every_x_frame, img_name, dest_path=None, img_ext = '.jpg'):
+        if not self.vid_cap.isOpened():
+            self.vid_cap = cv2.VideoCapture(self.video_path)
+        
+        if dest_path is None:
+            dest_path = os.getcwd()
+        else:
+            if not os.path.isdir(dest_path):
+                os.mkdir(dest_path)
+                print(f'Created the following directory: {dest_path}')
+        
+        frame_cnt = 0
+        img_cnt = 0
+
+        while self.vid_cap.isOpened():
+            
+            success,image = self.vid_cap.read() 
+            
+            if not success:
+                break
+            
+            if frame_cnt % every_x_frame == 0:
+                img_path = os.path.join(dest_path, ''.join([img_name, '_', str(img_cnt), img_ext]))
+                cv2.imwrite(img_path, image)  
+                img_cnt += 1
+                
+            frame_cnt += 1
+        
+        self.vid_cap.release()
+        cv2.destroyAllWindows()
+#######################################loop on each downloaded vedio
+        
+dire=r"C:/Users/NELSON JOSEPH/Downloads/data"  ### Main folder path where all the code and subfolders are placed
+vedios= os.listdir(dire+'/'+'Downloaded_videos'+'/')  #### In place of 'Videos' replace it by the folder name where all the video data is placed
+for ind,vedio in enumerate(vedios):
+    try:
+        path= dire+'/'+'Downloaded_videos'+'/'+vedio  #### In place of 'Videos' replace it by the folder name where all the video data is placed
+        fe = FrameExtractor(path)
+        fe.get_video_duration()
+        fe.get_n_images(every_x_frame=30) ### Adjust the frame rate as per the length of video
+        fe.extract_frames(every_x_frame=30, img_name=str(ind)+'shakti_kapoor_',dest_path=dire+'/'+'shakti_kapoor')
+    except Exception as e:
+        print(e)
+  
+
+dire=r"C:\Users\NELSON JOSEPH\DOWNLOADS\data\shakti_kapoor" # folder which has the frames or data
+
+dire1=r"C:\Users\NELSON JOSEPH\DOWNLOADS\data\shakti_kapoor_frame" # folder where faces will be cropped and stored
+os.makedirs(dire1, exist_ok = True)
+
+detector = MTCNN()
+
+def face_detect(path,save):
+    image = cv2.imread(path,1)
+    result=detector.detect_faces(image)
+    if not result:
+        print("Their is no any face: ",path)
+    if result:
+        b=result[0]['box']
+        img1=image[b[1]-70:b[1]+b[3]+70,b[0]-70:b[0]+b[2]+70]
+        face = cv2.resize(img1, (300, 300))
+        cv2.imwrite(save,face)
+        return(img)
+        
+for img in os.listdir(dire):
+    try:
+        path=dire+'/'+img
+        save=dire1+"/"+img
+        img2=face_detect(path,save)
+    except Exception as e:
+        print(e)
+print("All is done.")
+
+
