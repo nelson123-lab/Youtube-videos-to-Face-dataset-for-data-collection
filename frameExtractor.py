@@ -1,18 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jul  4 12:17:52 2020
-
-@author: srush
-"""
-
 #from pytube import YouTube
-import time
 import os
+import time
 import math
 import datetime
 import cv2
 
-####################### making frames of vedios
 
 class FrameExtractor():
     '''
@@ -24,13 +16,14 @@ class FrameExtractor():
         self.n_frames = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
         self.fps = int(self.vid_cap.get(cv2.CAP_PROP_FPS))
         
+    def get_n_images(self, every_x_frame):
+        n_images = math.floor(self.n_frames / every_x_frame) + 1
+        print(f'Extracting every {every_x_frame} (nd/rd/th) frame would result in {n_images} images.')
+        
     def get_video_duration(self):
         duration = self.n_frames/self.fps
         print(f'Duration: {datetime.timedelta(seconds=duration)}')
         
-    def get_n_images(self, every_x_frame):
-        n_images = math.floor(self.n_frames / every_x_frame) + 1
-        print(f'Extracting every {every_x_frame} (nd/rd/th) frame would result in {n_images} images.')
         
     def extract_frames(self, every_x_frame, img_name, dest_path=None, img_ext = '.jpg'):
         if not self.vid_cap.isOpened():
