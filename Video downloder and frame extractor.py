@@ -4,19 +4,15 @@ import math
 import datetime
 import cv2
 from mtcnn.mtcnn import MTCNN
-# from pytube import YouTube
-# from __future__ import unicode_literals
 import youtube_dl
 
 
 link = open('C:/Users/NELSON JOSEPH/Downloads/data/links_file.txt','r') #The text file where the links to be pasted.
-# download_path = "C:/Users/NELSON JOSEPH/Downloads/data/Downloaded_videos"
 path = 'C:/Users/NELSON JOSEPH/Downloads/data'
 os.chdir(path)
 New_folder = "Downloaded_videos"
 os.makedirs(New_folder)
 for i in link.readlines():
-    # ydl_opts = {'outtmpl': os.path.join(download_path, '%(title)s-%(id)s.%(ext)s'),}
     ydl_opts = {}
     os.chdir(path + "/Downloaded_videos")
     try:
@@ -24,14 +20,6 @@ for i in link.readlines():
             ydl.download([i])
     except:
         print("Some errror")
-    """ pytube library not working after new youtube policy """
-    # yt = YouTube(str(i)) 
-    # try:
-    #     yt.streams.filter(progressive = True, 
-    #     file_extension = "mp4").first().download(output_path = "C:/Users/NELSON JOSEPH/Downloads/data/Downloaded_videos")# Folder where the downloads are present.
-    #     print(str(i)+"Completed")
-    # except:
-    #     print("Some Error!")
 print('Task Completed!')
 
 """  To Convert Videos to frames  """
