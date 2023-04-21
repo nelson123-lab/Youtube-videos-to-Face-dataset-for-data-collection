@@ -17,12 +17,19 @@ os.chdir(path)
 
 # The folder to be made in the data folder.
 New_folder = "Downloaded_videos"
+
+# Making the directory named "Downloaded_videos" in the data folder so that the vedios will be saved in the "Downloaded_videos" folder.
 os.makedirs(New_folder)
+
+# Iterating through the links folder.
 for i in link.readlines():
     ydl_opts = {}
+    # Changing the directory to the "Downloaded_videos" so that the videos will be saved here.
     os.chdir(path + "/Downloaded_videos")
+    # Trying to download from the uploader id.
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            # Download each video one by one.
             ydl.download([i])
     except:
         print("Some errror")
