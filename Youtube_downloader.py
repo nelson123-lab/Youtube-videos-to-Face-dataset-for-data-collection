@@ -1,7 +1,5 @@
 # Youtube downloader
 
-```python
-
 import os
 import yt_dlp
 
@@ -19,5 +17,3 @@ for i in link.readlines():
     except:
         print("Some errror")
 print('Task Completed!')
-
-```
