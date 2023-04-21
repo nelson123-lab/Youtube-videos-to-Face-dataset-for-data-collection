@@ -9,8 +9,13 @@ import yt_dlp
 # The text file where the links to be pasted. Multiple videos can be downloaded at the same time by pasting each links per line.
 link = open('C:/Users/NELSON JOSEPH/Downloads/data/links_file.txt','r') 
 
+# The path in which a new folder named downloaded folder will be created.
 path = 'C:/Users/NELSON JOSEPH/Downloads/data'
+
+# Changing the directory to the path.
 os.chdir(path)
+
+# The folder to be made in the data folder.
 New_folder = "Downloaded_videos"
 os.makedirs(New_folder)
 for i in link.readlines():
