@@ -4,10 +4,11 @@ import math
 import datetime
 import cv2
 from mtcnn.mtcnn import MTCNN
-import youtube_dl
+import yt_dlp
 
+# The text file where the links to be pasted. Multiple videos can be downloaded at the same time by pasting each links per line.
+link = open('C:/Users/NELSON JOSEPH/Downloads/data/links_file.txt','r') 
 
-link = open('C:/Users/NELSON JOSEPH/Downloads/data/links_file.txt','r') #The text file where the links to be pasted.
 path = 'C:/Users/NELSON JOSEPH/Downloads/data'
 os.chdir(path)
 New_folder = "Downloaded_videos"
@@ -16,7 +17,7 @@ for i in link.readlines():
     ydl_opts = {}
     os.chdir(path + "/Downloaded_videos")
     try:
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([i])
     except:
         print("Some errror")
