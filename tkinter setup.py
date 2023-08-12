@@ -47,13 +47,11 @@ def button_click():
         url.append(line)
     print(url)
 
-# Bind the button click event to the function
+
 button.config(command=button_click)
 
 # Start the mainloop
 window.mainloop()
-
-
 
 
 
