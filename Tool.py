@@ -73,7 +73,6 @@ def button_click():
     # print(vedios)
     for ind,vedio in enumerate(os.listdir(folder_path)):
         try:
-            os.mkdir(folder_path+'/'+'New folder'+'/'+vedio)
             # fix video taking input problems
             path = folder_path+'/'+'New folder'+'/'+vedio  #### In place of 'Videos' replace it by the folder name where all the video data is placed
             fe = FrameExtractor(path)

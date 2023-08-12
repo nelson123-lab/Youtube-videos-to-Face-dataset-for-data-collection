@@ -57,15 +57,15 @@ class FrameExtractor():
         cv2.destroyAllWindows()
 #######################################loop on each downloaded vedio
         
-dire=r'C:\Users\NELSON JOSEPH\Downloads\data'  ### Main folder path where all the code and subfolders are placed
-vedios= os.listdir(dire+'/'+'New folder'+'/')  #### In place of 'Videos' replace it by the folder name where all the video data is placed
-for ind,vedio in enumerate(vedios):
-    try:
-        path= dire+'/'+'New folder'+'/'+vedio  #### In place of 'Videos' replace it by the folder name where all the video data is placed
-        fe = FrameExtractor(path)
-        fe.get_video_duration()
-        fe.get_n_images(every_x_frame=50) ### Adjust the frame rate as per the length of video
-        fe.extract_frames(every_x_frame=50, img_name=str(ind)+'akhil_mishra_',dest_path=dire+'/'+'akhil_mishra')
-    except Exception as e:
-        print(e)
+# dire=r'C:\Users\NELSON JOSEPH\Downloads\data'  ### Main folder path where all the code and subfolders are placed
+# vedios= os.listdir(dire+'/'+'New folder'+'/')  #### In place of 'Videos' replace it by the folder name where all the video data is placed
+# for ind,vedio in enumerate(vedios):
+#     try:
+#         path= dire+'/'+'New folder'+'/'+vedio  #### In place of 'Videos' replace it by the folder name where all the video data is placed
+#         fe = FrameExtractor(path)
+#         fe.get_video_duration()
+#         fe.get_n_images(every_x_frame=50) ### Adjust the frame rate as per the length of video
+#         fe.extract_frames(every_x_frame=50, img_name=str(ind)+'akhil_mishra_',dest_path=dire+'/'+'akhil_mishra')
+#     except Exception as e:
+#         print(e)
   
