@@ -4,6 +4,7 @@ from tkinter import ttk
 from ttkthemes import ThemedTk
 import os
 import yt_dlp
+from frameExtractor import FrameExtractor
 
 
 
@@ -67,8 +68,20 @@ def button_click():
                 print("Some errror")
                 print("working")
         print('Task Completed!')
-
-
+      ### Main folder path where all the code and subfolders are placed
+    # vedios = os.listdir(folder_path)  #### In place of 'Videos' replace it by the folder name where all the video data is placed
+    # print(vedios)
+    for ind,vedio in enumerate(os.listdir(folder_path)):
+        try:
+            os.mkdir(folder_path+'/'+'New folder'+'/'+vedio)
+            # fix video taking input problems
+            path = folder_path+'/'+'New folder'+'/'+vedio  #### In place of 'Videos' replace it by the folder name where all the video data is placed
+            fe = FrameExtractor(path)
+            fe.get_video_duration()
+            fe.get_n_images(every_x_frame=50) ### Adjust the frame rate as per the length of video
+            fe.extract_frames(every_x_frame=50, img_name=str(ind)+'Name_',dest_path=folder_path+'/'+'vedio')
+        except Exception as e:
+            print(e)
 
 button.config(command=button_click)
 
