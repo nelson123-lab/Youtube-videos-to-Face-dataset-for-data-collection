@@ -1,12 +1,15 @@
 import tkinter as tk
 from tkinter import font
 from tkinter import ttk
+from ttkthemes import ThemedTk
+
+# Create a themed Tkinter window
 
 # Initializing a list to store the URl Data
 url = []
 
 # Create a window
-window = tk.Tk()
+window = ThemedTk(theme="equilux")
 
 
 # Set the window size
@@ -19,8 +22,8 @@ title_bar.pack()
 
 
 # Add a text box to the window
-text_box = tk.Text()
-text_box.pack()
+text_box = tk.Text(window, width=70, height=20, highlightbackground="black", highlightthickness=2)
+text_box.pack(pady = 20)
 
 def on_select(event):
     selected_value = dropdown.get()
@@ -29,7 +32,7 @@ def on_select(event):
 dropdown = ttk.Combobox(window, values=["All Gender", "Male", "Female"])
 dropdown.current(0)  # Set the default selection to the first element
 dropdown.bind("<<ComboboxSelected>>", on_select)
-dropdown.pack()
+dropdown.pack(pady = 5)
 
 # Add a button to the window
 button = tk.Button(text="Convert to face data")
@@ -44,13 +47,12 @@ def button_click():
         url.append(line)
     print(url)
 
-
-
 # Bind the button click event to the function
 button.config(command=button_click)
 
 # Start the mainloop
 window.mainloop()
+
 
 
 
