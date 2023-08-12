@@ -5,10 +5,7 @@ from ttkthemes import ThemedTk
 import os
 import yt_dlp
 
-# Create a themed Tkinter window
 
-# Initializing a list to store the URl Data
-url = []
 
 # Create a window
 window = ThemedTk(theme="equilux")
@@ -42,14 +39,34 @@ button.pack()
 
 # Define a function to handle button click
 def button_click():
+    # Creating a new folder where the downloaded videos will be located.
+    folder_name = 'Downloaded_videos'
+    folder_path = os.path.join(os.getcwd(), folder_name)
+
+    if os.path.exists(folder_path):
+        i = 1
+        while os.path.exists(folder_path):
+            new_folder_name = folder_name + '_' + str(i)
+            folder_path = os.path.join(os.getcwd(), new_folder_name)
+            i += 1
+
+    os.mkdir(folder_path)
     input_text = text_box.get("1.0", tk.END)  # Get the text from the text box
-    lines = input_text.split("\n")  # Split the text into lines
+    url = input_text.split("\n")  # Split the text into lines
     # print("You entered:")
-    for line in lines:
-        url.append(line)
-    # print(url)
-
-
+    for line in url:
+        if len(line) == 0:
+            pass
+        else:
+            ydl_opts = {}
+            os.chdir(folder_path)
+            try:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([line])
+            except:
+                print("Some errror")
+                print("working")
+        print('Task Completed!')
 
 
 
@@ -59,20 +76,6 @@ button.config(command=button_click)
 window.mainloop()
 
 
-current_path = os.getcwd()
-os.chdir(current_path)
-# Creating a new folder where the downloaded videos will be located.
-os.makedirs("Downloaded_videos")
-for i in url:
-    print(i)
-    ydl_opts = {}
-    os.chdir(current_path + "/Downloaded_videos")
-    try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([i])
-    except:
-        print("Some errror")
-print('Task Completed!')
 
 
 
