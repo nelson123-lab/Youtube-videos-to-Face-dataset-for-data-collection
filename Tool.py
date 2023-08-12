@@ -69,8 +69,6 @@ def button_click():
                 print("working")
         print('Task Completed!')
       ### Main folder path where all the code and subfolders are placed
-    # vedios = os.listdir(folder_path)  #### In place of 'Videos' replace it by the folder name where all the video data is placed
-    # print(vedios)
     for ind,vedio in enumerate(os.listdir(folder_path)):
         print(vedio)
         try:
